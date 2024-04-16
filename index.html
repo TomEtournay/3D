@@ -15,28 +15,29 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/STLLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+
     <script>
         let scene, camera, renderer, model, controls;
 
         function init() {
             // Initialisation de la scène
             scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xaba79e); // Définir la couleur de fond
 
             // Initialisation de la caméra
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 300;
+            camera.position.z = 1;
 
             // Initialisation du rendu
             renderer = new THREE.WebGLRenderer();
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.getElementById('myThreeJsScene').appendChild(renderer.domElement);
 
-            // Chargement de la STL
-            const loader = new THREE.STLLoader();
-            loader.load('3D/meshed.stl', function (geometry) {
-                const material = new THREE.MeshNormalMaterial();
-                model = new THREE.Mesh(geometry, material);
-                scene.add(model);
+            // Chargement de la GLTF
+            const loader = new THREE.GLTFLoader();
+            loader.load('3D/Convoyeur/1478600.gltf', function (gltf) {
+                scene.add(gltf.scene);
             }, undefined, function (error) {
                 console.error(error);
             });
@@ -53,6 +54,7 @@
             controls.rotateSpeed = 0.3; // Réglage de la vitesse de rotation
         }
 
+
         function animate() {
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
@@ -64,3 +66,8 @@
     </script>
 </body>
 </html>
+
+
+ 
+
+
